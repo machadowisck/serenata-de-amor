@@ -77,7 +77,9 @@ class MealPriceOutlierClassifier(TransformerMixin):
         _X['y'] = 1
         is_outlier = self.__applicable_rows(_X) & \
             _X['threshold'].notnull() & \
-            (_X['net_value'] > _X['threshold'])
+            (_X['net_value'] > _X['threshold']) & \
+            (_X['net_value'] > 50)
+        
         _X.loc[is_outlier, 'y'] = -1
         return _X['y']
 
